@@ -54,11 +54,13 @@ The model performed significantly better once the requested generation length at
 
 ### Project Structure
 
+```text
 ├── notebooks/
-│   ├── Fantasy_Story_Weaver.ipynb          # Full fine-tuning pipeline
-│   └── iFantasy_Story_Weaver_Inference.ipynb
-├── FSTData.jsonl/                       # Sample of dataset from HuggingFace.io
-├── app.py                      # Gradio demo (planned / in progress)
+│   ├── Fantasy_Story_Weaver.ipynb              # Full fine-tuning pipeline
+│   └── Fantasy_Story_Weaver_Inference.ipynb    # Inference & evaluation
+├── data/
+│   └── FSTData.jsonl                           # Sample of the training data
+├── app.py                                      # Gradio demo (coming next)
 └── README.md
 
 ---
