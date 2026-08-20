@@ -55,12 +55,10 @@ The model performed significantly better once the requested generation length at
 ### Project Structure
 
 ```text
-├── notebooks/
-│   ├── Fantasy_Story_Weaver.ipynb              # Full fine-tuning pipeline
-│   └── Fantasy_Story_Weaver_Inference.ipynb    # Inference & evaluation
-├── data/
-│   └── FSTData.jsonl                           # Sample of the training data
-├── app.py                                      # Gradio demo (coming next)
+├──  Fantasy_Story_Weaver.ipynb              # Full fine-tuning pipeline
+└── Fantasy_Story_Weaver_Inference.ipynb    # Inference & evaluation
+├──  FSTData.jsonl                           # Sample of the training data
+├── app.py                                      # Gradio demo
 └── README.md
 ```
 ---
