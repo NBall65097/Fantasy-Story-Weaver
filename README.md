@@ -76,7 +76,7 @@ model = AutoModelForCausalLM.from_pretrained(
     torch_dtype="auto"
 )
 tokenizer = AutoTokenizer.from_pretrained("NBall65097/fantasy-story-weaver")
-
+```
 Use the recommended system prompt (available on the model card) for best results.
 
 Challenges & Learnings
