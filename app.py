@@ -2,10 +2,7 @@ import gradio as gr
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
 from threading import Thread
-<<<<<<< HEAD
 import spaces
-=======
->>>>>>> 4a27aa1d190647b485aacc4d17032832a63a6f6a
 
 # -----------------------------
 # Model Loading
@@ -39,10 +36,7 @@ Never reference word count, instructions, or add extra text. Always stay in char
 # -----------------------------
 # Generation Function
 # -----------------------------
-<<<<<<< HEAD
 @spaces.GPU
-=======
->>>>>>> 4a27aa1d190647b485aacc4d17032832a63a6f6a
 def generate_story(plot_seed, temperature=0.7, max_new_tokens=450):
     if not plot_seed.strip():
         return "Please enter a plot seed."
@@ -91,11 +85,7 @@ example_prompts = [
     "In the Library of Borrowed Voices, a librarian can lend her voice to silent books so they can speak their stories aloud, but the next book demands to use her voice permanently.",
 ]
 
-<<<<<<< HEAD
 with gr.Blocks() as demo:
-=======
-with gr.Blocks(theme=gr.themes.Soft(primary_hue="purple")) as demo:
->>>>>>> 4a27aa1d190647b485aacc4d17032832a63a6f6a
     gr.Markdown(
         """
         # 🪄 Fantasy Story Weaver
@@ -122,10 +112,6 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="purple")) as demo:
             output = gr.Textbox(
                 label="Generated Story",
                 lines=18,
-<<<<<<< HEAD
-=======
-                show_copy_button=True
->>>>>>> 4a27aa1d190647b485aacc4d17032832a63a6f6a
             )
 
     gr.Examples(
@@ -149,8 +135,4 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="purple")) as demo:
     )
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     demo.launch(theme=gr.themes.Soft(primary_hue="purple"))
-=======
-    demo.launch()
->>>>>>> 4a27aa1d190647b485aacc4d17032832a63a6f6a
