@@ -79,7 +79,7 @@ tokenizer = AutoTokenizer.from_pretrained("NBall65097/fantasy-story-weaver")
 ```
 Use the recommended system prompt (available on the model card) for best results.
 
-Challenges & Learnings
+### Challenges & Learnings
 
 Generation degeneration: Early outputs frequently collapsed into word-association lists. Root cause was a mismatch between training example length and the length requested in the inference system prompt.
 Colab limitations: Runtime disconnects and CUDA OOM errors required careful memory management (gradient accumulation, reduced sequence length, packing) for reliable iteration.
@@ -87,7 +87,7 @@ Evaluation: Standard loss metrics were insufficient for creative quality. Qualit
 Practical fine-tuning: Learned the importance of keeping training and inference distributions closely aligned, especially for style-controlled generation tasks.
 
 
-Future Improvements
+### Future Improvements
 
 Expand the dataset with more diverse high-quality examples
 Add a preference-tuning stage (DPO/ORPO) to further improve coherence
@@ -95,7 +95,7 @@ Build and deploy a public Gradio Space for interactive demos
 Experiment with longer-context variants and multi-turn story continuation
 
 
-Links
+### Links
 
 Merged Model: NBall65097/fantasy-story-weaver
 LoRA Adapters: (link if separate)
@@ -103,7 +103,7 @@ Dataset: NBall65097/fantasy-storyweaver-data
 Base Model: Microsoft Phi-3.5-mini-instruct (via Unsloth)
 
 
-Acknowledgements
+### Acknowledgements
 
 Unsloth for efficient fine-tuning
 Hugging Face transformers + trl
