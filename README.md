@@ -79,6 +79,19 @@ tokenizer = AutoTokenizer.from_pretrained("NBall65097/fantasy-story-weaver")
 ```
 Use the recommended system prompt (available on the model card) for best results.
 
+---
+
+### Live Demo
+
+A Gradio demo is available here:  
+**[Fantasy Story Weaver Space](https://huggingface.co/spaces/NBall65097/fantasy-story-weaver)**
+
+> ⚠️ **Note:** The live demo requires GPU hardware.  
+> On Hugging Face’s free CPU tier the model is too slow or runs out of memory.  
+> You can still run the demo locally using the `app.py` in this repository, or load the model directly from Hugging Face.
+
+---
+
 ### Challenges & Learnings
 
 Generation degeneration: Early outputs frequently collapsed into word-association lists. Root cause was a mismatch between training example length and the length requested in the inference system prompt.
