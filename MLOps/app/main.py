@@ -25,7 +25,7 @@ class GenerateResponse(BaseModel):
 
 model = AutoModelForCausalLM.from_pretrained(
     "NBall65097/fantasy-story-weaver",
-    device_map="cpu",           # auto places on GPU
+    device_map="auto",           # auto places on GPU
     torch_dtype=torch.float16,
     trust_remote_code=True,
 )
@@ -44,7 +44,7 @@ model.eval()
 
 app = FastAPI()
 
-def generate_story(plot_seed: str,  temperature=0.7, max_new_tokens=100) -> str: # Set to 400 when confirmed to work.
+def generate_story(plot_seed: str,  temperature=0.7, max_new_tokens=400) -> str: # Set to 400 when confirmed to work.
     messages = [
         {"role": "system", "content": systemPrompt},
         {"role": "user", "content": plot_seed}
@@ -88,6 +88,6 @@ def generate_story(plot_seed: str,  temperature=0.7, max_new_tokens=100) -> str:
 @app.post("/generate")
 def generate(request: GenerateRequest) -> GenerateResponse:
     story_text = generate_story(request.plot_seed)
-    return GenerateResponse(story_text)
+    return GenerateResponse(story=story_text)
 
 
