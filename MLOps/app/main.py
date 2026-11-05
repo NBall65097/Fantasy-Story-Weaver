@@ -1,7 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
+import os
 
 systemPrompt = """You are Fantasy Story Weaver, a masterful weaver of atmospheric fantasy tales.
                 Given a user's plot seed, craft a self-contained 250-300 word story snippet. Requirements:
@@ -23,26 +24,37 @@ class GenerateResponse(BaseModel):
     story: str
 
 
-model = AutoModelForCausalLM.from_pretrained(
-    "NBall65097/fantasy-story-weaver",
-    device_map="auto",           # auto places on GPU
-    torch_dtype=torch.float16,
-    trust_remote_code=True,
-)
+class HealthResponse(BaseModel):
+    health: str
 
-tokenizer = AutoTokenizer.from_pretrained(
-    "NBall65097/fantasy-story-weaver",
-    trust_remote_code=True,
-)
 
-# Important for generation stability
-if tokenizer.pad_token is None:
-    tokenizer.pad_token = tokenizer.eos_token
+LOAD_MODEL = os.getenv("LOAD_MODEL", "1") == "1"
+model = None
+tokenizer = None
 
-model.config.use_cache = True
-model.eval()
+if LOAD_MODEL:
+    model = AutoModelForCausalLM.from_pretrained(
+        "NBall65097/fantasy-story-weaver",
+        device_map="auto",           # auto places on GPU
+        torch_dtype=torch.float16,
+        trust_remote_code=True,
+    )
+
+    tokenizer = AutoTokenizer.from_pretrained(
+        "NBall65097/fantasy-story-weaver",
+        trust_remote_code=True,
+    )
+
+    # Important for generation stability
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+
+    model.config.use_cache = True
+    model.eval()
 
 app = FastAPI()
+
+
 
 def generate_story(plot_seed: str,  temperature=0.7, max_new_tokens=400) -> str: # Set to 400 when confirmed to work.
     messages = [
@@ -87,7 +99,17 @@ def generate_story(plot_seed: str,  temperature=0.7, max_new_tokens=400) -> str:
 
 @app.post("/generate")
 def generate(request: GenerateRequest) -> GenerateResponse:
+    if model is None or tokenizer is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Model not loaded. Start with LOAD_MODEL=1 on a machine that can run it."
+        )
     story_text = generate_story(request.plot_seed)
     return GenerateResponse(story=story_text)
 
+@app.get("/health")
+def health() -> HealthResponse:
+    if model is None:
+        return HealthResponse(health="healthy_api_only")
+    return HealthResponse(health="healthy")
 
